@@ -7,5 +7,6 @@
 # The PostgreSQL driver (psycopg2) is already installed with CKAN,
 # so we do not need to require it again.
 
-# Use simple-crypt to encrypt passwords
-simple-crypt==4.1.7
+# Use cryptocode to encrypt passwords
+pandas
+cryptocode

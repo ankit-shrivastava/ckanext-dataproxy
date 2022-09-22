@@ -1,0 +1,14 @@
+dataproxy-js:
+  filter: rjsmin
+  output: ckanext-dataproxy/%(version)s-dataproxy.js
+  contents:
+    - js/dataproxy.js
+  extra:
+    preload:
+      - base/main
+
+dataproxy-css:
+  filter: cssrewrite
+  output: ckanext-dataproxy/%(version)s-dataproxy.css
+  contents:
+    - styles/dataproxy.css

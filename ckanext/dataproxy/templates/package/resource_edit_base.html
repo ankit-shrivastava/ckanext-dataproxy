@@ -1,10 +1,10 @@
 {% ckan_extends %}
 {% block styles %}
-  {{ super() }}
-  {% resource 'dataproxy/dataproxy.css' %}
+{{ super() }}
+{% asset 'ckanext-dataproxy/dataproxy-css' %}
 {% endblock %}
 {% block scripts %}
-  {{ super() }}
-  {% resource 'vendor/fileupload' %}
-  {% resource 'dataproxy/dataproxy.js' %}
+{{ super() }}
+{% asset 'vendor/fileupload' %}
+{% asset 'ckanext-dataproxy/dataproxy-js' %}
 {% endblock %}

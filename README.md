@@ -1,78 +1,123 @@
+[![Tests](https://github.com//ckanext-dataproxy/workflows/Tests/badge.svg?branch=main)](https://github.com//ckanext-dataproxy/actions)
+
 # ckanext-dataproxy
-ckanext-dataproxy is [CKAN](https://github.com/ckan/ckan) extension that enables previewing data from remote databases via SQLAlchemy. The extension is compatible with datastore by masking the dataproxy resource as a datastore resource so it could be requested via `/api/3/action/datastore_search` or previewed in-browser with recline-preview.
+
+**TODO:** Put a description of your extension here:  What does it do? What features does it have? Consider including some screenshots or embedding a video!
 
 
-Usage:
+## Requirements
 
-- [CKAN 2.2.x](https://github.com/cphsolutionslab/ckanext-dataproxy/wiki/Usage-with-CKAN-2.2.x)
-- [CKAN 2.5.x](https://github.com/cphsolutionslab/ckanext-dataproxy/wiki/Usage-with-CKAN-2.5.x)
+**TODO:** For example, you might want to mention here which versions of CKAN this
+extension works with.
 
-## Installation 
-__NB! This module is developed for CKAN v2.2.x and v2.5.x, compatibility with other versions is not ensured__
+If your extension works across different versions you can add the following table:
 
-1) Clone this repo  
+Compatibility with core CKAN versions:
 
-```sh
-cd /usr/lib/ckan/default/src
-git clone https://github.com/cphsolutionslab/ckanext-dataproxy.git
-cd ckanext-dataproxy
-```
+| CKAN version    | Compatible?   |
+| --------------- | ------------- |
+| 2.6 and earlier | not tested    |
+| 2.7             | not tested    |
+| 2.8             | not tested    |
+| 2.9             | not tested    |
 
- 2) Activate your virtual environment, e.g.
-```
-. /usr/lib/ckan/bin/activate
-```
+Suggested values:
 
- 3) Install requirements (It is not required to install drivers for databases you don't plan to proxy, see the file)  
-```
-pip install -r requirements.txt
-```
-
-__Additional packages may be required to compile the database-specific drivers. For Ubuntu, you may need:__
-
-```
-sudo apt-get install build-essential libmysqlclient-dev freetds-dev
-```
-
-4) Install the plugin  
-
-```sh
-python setup.py develop
-```
-
-5) Set the dataproxy secret in your CKAN settings file (e.g. /etc/ckan/default/production.ini)
-
-For example, in the settings file:
-
-```sh
-# Password for AES256 key generation
-ckan.dataproxy.secret = c9f56fdfd12ee615f3d858... # Don't actually use this string, use a random secret.
-```
-You can run the following command in your shell to generate a random secret:
-```sh
-echo "import hashlib ; from uuid import uuid4 ; print hashlib.sha256(str(uuid4())).hexdigest()" | python -
-```
+* "yes"
+* "not tested" - I can't think of a reason why it wouldn't work
+* "not yet" - there is an intention to get it working
+* "no"
 
 
-## Enable on CKAN 2.2.x
+## Installation
 
-Enable the extension by appending `dataproxy` to `ckan.plugins` variable in your configuration file:
+**TODO:** Add any additional install steps to the list below.
+   For example installing any non-Python dependencies or adding any required
+   config settings.
 
-```
-ckan.plugins = stats text_preview ... dataproxy
-```
+To install ckanext-dataproxy:
+
+1. Activate your CKAN virtual environment, for example:
+
+     . /usr/lib/ckan/default/bin/activate
+
+2. Clone the source and install it on the virtualenv
+
+    git clone https://github.com//ckanext-dataproxy.git
+    cd ckanext-dataproxy
+    pip install -e .
+	pip install -r requirements.txt
+
+3. Add `dataproxy` to the `ckan.plugins` setting in your CKAN
+   config file (by default the config file is located at
+   `/etc/ckan/default/ckan.ini`).
+
+4. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu:
+
+     sudo service apache2 reload
 
 
-## Enable on CKAN 2.5.x
+## Config settings
 
-Enable the extension by appending `dataproxy` and `dataproxy_view` to `ckan.plugins` variable in your configuration file:
+None at present
 
-```
-ckan.plugins = stats text_preview ... dataproxy dataproxy_view
-```
+**TODO:** Document any optional config settings here. For example:
 
-Then append `dataproxy_view` to `ckan.views.default_views` variable:
+	# The minimum number of hours to wait before re-checking a resource
+	# (optional, default: 24).
+	ckanext.dataproxy.some_setting = some_default_value
 
-```
-ckan.views.default_views = image_view ... dataproxy_view
-```
+
+## Developer installation
+
+To install ckanext-dataproxy for development, activate your CKAN virtualenv and
+do:
+
+    git clone https://github.com//ckanext-dataproxy.git
+    cd ckanext-dataproxy
+    python setup.py develop
+    pip install -r dev-requirements.txt
+
+
+## Tests
+
+To run the tests, do:
+
+    pytest --ckan-ini=test.ini
+
+
+## Releasing a new version of ckanext-dataproxy
+
+If ckanext-dataproxy should be available on PyPI you can follow these steps to publish a new version:
+
+1. Update the version number in the `setup.py` file. See [PEP 440](http://legacy.python.org/dev/peps/pep-0440/#public-version-identifiers) for how to choose version numbers.
+
+2. Make sure you have the latest version of necessary packages:
+
+    pip install --upgrade setuptools wheel twine
+
+3. Create a source and binary distributions of the new version:
+
+       python setup.py sdist bdist_wheel && twine check dist/*
+
+   Fix any errors you get.
+
+4. Upload the source distribution to PyPI:
+
+       twine upload dist/*
+
+5. Commit any outstanding changes:
+
+       git commit -a
+       git push
+
+6. Tag the new release of the project on GitHub with the version number from
+   the `setup.py` file. For example if the version number in `setup.py` is
+   0.0.1 then do:
+
+       git tag 0.0.1
+       git push --tags
+
+## License
+
+[AGPL](https://www.gnu.org/licenses/agpl-3.0.en.html)

@@ -1,7 +1,6 @@
 from ckan.logic import get_action
 from ckan.common import config
-from simplecrypt import encrypt
-from binascii import hexlify
+from ckanext.dataproxy.utils.utils import dataproxy_encrypt
 from ckan.model import Resource
 
 orig_resource_update = get_action('resource_update')
@@ -36,6 +35,7 @@ def dataproxy_resource_update(context, data_dict=None):
         else:
             data_dict['url'] = data_dict['url'].replace(password, '_password_')
             # encrypt db_password
-            data_dict['db_password'] = hexlify(encrypt(secret, password))
+            data_dict['db_password'] = dataproxy_encrypt(password, secret)
 
     return orig_resource_update(context, data_dict)
+
